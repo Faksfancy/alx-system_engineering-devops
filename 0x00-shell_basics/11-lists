@@ -1,2 +1,2 @@
 #!/bin/bash
-ln -s /bin/ls __ls__
+find . -maxdepth 1 -exec ls -l {} \;_
