@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "obase=bestchol; ibase=water; scale=0; $WATER + $STIR" | bc
+BESTCHOL=$((16#$WATER + 16#$STIR))
