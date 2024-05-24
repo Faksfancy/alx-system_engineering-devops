@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
-#Install nginx web server
-apt-get -y update
-apt-get -y install nginx
-echo "Holberton School for the win!" > /var/www/html/index.nginx-debian.html
-service nginx start
+#A Bash script that configures a new Ubuntu machine to respect above requirements
+# Update package lists
+sudo apt update -y
+
+# Install Nginx
+sudo apt install nginx -y
+
+# Set up default Nginx configuration
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+# Restart Nginx
+sudo service nginx restart
+
+echo "Nginx configuration updated successfully."
