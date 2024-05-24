@@ -1,22 +1,24 @@
-# Install and configure nginx
-package { 'jfryman-nginx':
-  ensure => installed,
+# Setup New Ubuntu server with nginx
+
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
 }
 
-include nginx
-
-class { 'nginx':
-  manage_repo    => true,
-  package_source => 'nginx-stable',
+package { 'nginx':
+	ensure => 'installed',
+	require => Exec['update system']
 }
 
-nginx::resource::server { '34.73.76.135':
-  listen_port      => 80,
-  www_root         => '/var/www/html/',
-  vhost_cfg_append => { 'rewrite' => '^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent' },
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
 }
 
-file { 'index':
-  path    => '/var/www/html/index.nginx-debian.html',
-  content => 'Holberton School for the win!',
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
+}
+
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
