@@ -1,0 +1,38 @@
+What Happens When You Type https://www.google.com in Your Browser and Press Enter:
+ A complex series of steps occur behind the scenes to load the web page. Let's break down these steps:
+
+1. DNS Request
+Domain Name System (DNS): When you type a URL into your browser, it resolve the human-readable domain name (www.google.com) into an IP address that computers can use to locate the server. The browser checks its own cache to see if it has recently looked up the domain name. If not found, the request is sent to the operating system's cache. If the OS doesn't have the information, it queries the router's cache. If the router doesn't have it, the request is sent to the Internet Service Provider's DNS server. If the ISP's DNS server doesn't have the answer, it does a recursive search, querying root DNS servers, Top-Level Domain servers, and authoritative DNS servers for google.com.
+
+2. TCP/IP Connection
+With the IP address obtained, your browser initiates a TCP/IP connection to the server (Three-Way Handshake):
+ 1. Your browser sends a synchronize packet to the server.
+ 2. The server responds with a synchronize-acknowledge packet.
+ 3. Your browser sends an acknowledge packet back to the server, completing the handshake.
+
+3. Firewall
+During the connection process, the data packets pass through various firewalls:
+- Local Firewall: Your device's firewall
+- Network Firewall: Your router or ISP might have a firewall
+- Server-Side Firewall: Google's firewall
+
+4. HTTPS/SSL
+The connection now moves to establish a secure channel using HTTPS/SSL.
+
+5. Load-Balancer
+Large-scale websites like Google use *load-balancers* to distribute incoming traffic across multiple servers. 
+
+6. Web Server
+The selected *web server* receives the request. The web server's primary role is to handle HTTP requests from clients. It processes the incoming request and determines if it needs to serve static content (like HTML, CSS, images) or if it needs to forward the request to an application server for dynamic content.
+
+7. Application Server
+For dynamic content, the web server forwards the request to an application server. The application server executes the necessary business logic, processes inputs, interacts with other services or APIs, and often queries the database to retrieve or store data.
+
+8. Database
+If the application server needs to retrieve or store data, it interacts with the database. The application server sends a query to the database server (e.g., SQL query). The database processes the query, retrieves the relevant data, and sends it back to the application server.
+
+Response Delivery
+The application server sends the dynamically generated content back to the web server, which then sends it to the load-balancer. The load-balancer forwards the content through the established TCP connection, encrypted via TLS, back to your browser.
+
+Rendering
+Finally, your browser receives the HTML, CSS, JavaScript, and other resources, renders the page, and displays it to you.
